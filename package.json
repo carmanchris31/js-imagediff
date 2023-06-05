@@ -29,9 +29,9 @@
   },
   "devDependencies": {
     "canvas": "^2.11.2",
-    "jasmine": "^3.5.0",
-    "karma": "^4.4.1",
-    "karma-jasmine": "^3.1.0",
+    "jasmine": "^4.6.0",
+    "karma": "^6.4.2",
+    "karma-jasmine": "^4.0.2",
     "karma-phantomjs-launcher": "^1.0.4",
     "prettier": "^2.8.8",
     "smoosh": ">=0.3.1"
