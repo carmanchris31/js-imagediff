@@ -8,7 +8,7 @@ module.exports = function (config) {
         random: false,
       },
     },
-    browsers: ["PhantomJS"],
+    browsers: ["ChromeHeadless"],
     proxies: {
       "/spec/": "/base/",
     },

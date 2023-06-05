@@ -31,8 +31,8 @@
     "canvas": "^2.11.2",
     "jasmine": "^4.6.0",
     "karma": "^6.4.2",
+    "karma-chrome-launcher": "^3.2.0",
     "karma-jasmine": "^4.0.2",
-    "karma-phantomjs-launcher": "^1.0.4",
     "prettier": "^2.8.8",
     "smoosh": ">=0.3.1"
   },
