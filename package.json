@@ -1,5 +1,6 @@
 {
   "name": "imagediff",
+  "version": "2.0.0",
   "main": "./imagediff.js",
   "browser": {
     "canvas": "./browser/canvas.js"
@@ -44,7 +45,6 @@
     "type": "git",
     "url": "git://github.com/HumbleSoftware/js-imagediff.git"
   },
-  "version": "2.0.0-alpha.1",
   "engines": {
     "node": ">= 16.0.0"
   },
