@@ -22,7 +22,11 @@
   ],
   "author": "Carl Sutherland <carl@humblesoftware.com> (http://www.humblesoftware.com/)",
   "contributors": [
-    "Jordan Santell <@jsantell>"
+    "Jordan Santell <@jsantell>",
+    {
+      "name": "Christopher Carman",
+      "email": "carmanchris31@gmail.com"
+    }
   ],
   "optionalDependencies": {
     "canvas": ">=2.6.1"
