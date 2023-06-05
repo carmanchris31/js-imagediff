@@ -12,8 +12,18 @@ describe("ImageUtils", function () {
     return context;
   }
 
-  function newImage() {
-    return isNode ? new Canvas.Image() : new Image();
+  function newImage(src) {
+    const image = isNode ? new Canvas.Image() : new Image();
+    image.src = src;
+    return image;
+  }
+
+  function getContextFromImage(image) {
+    const context = imagediff
+      .createCanvas(image.width, image.height)
+      .getContext("2d");
+    context.drawImage(image, 0, 0);
+    return context;
   }
 
   function loadImage(image, src, callback) {
@@ -321,76 +331,70 @@ describe("ImageUtils", function () {
     });
 
     describe("toImageDiffEqual", function () {
-      var toImageDiffEqual = imagediff.jasmine.toImageDiffEqual(),
-        imageA = newImage(),
-        imageB = newImage(),
-        imageC = newImage();
+      var toImageDiffEqual = imagediff.jasmine.toImageDiffEqual();
 
-      imageA.src = "spec/images/xmark.png";
-      imageB.src = "spec/images/xmark.png";
-      imageC.src = "spec/images/checkmark.png";
+      var images = {
+        a: newImage("spec/images/xmark.png"),
+        b: newImage("spec/images/xmark.png"),
+        c: newImage("spec/images/checkmark.png"),
+      };
 
       beforeAll(function (done) {
         setTimeout(function () {
-          if (!imageA.complete || !imageB.complete || !imageC.complete) {
-            throw new Error("Images did not load.");
+          for (key in images) {
+            if (!images[key].complete) {
+              throw new Error("Images did not load.");
+            }
           }
           done();
         }, 100);
       });
 
       describe("with images", function () {
-        generateTests({ a: imageA, b: imageB, c: imageC });
-      });
-
-      describe("with CanvasRenderingContext2D", function () {
-        var subject = {};
-        function beforeAll() {
-          subject.a = imagediff
-            .createCanvas(imageA.width, imageA.height)
-            .getContext("2d");
-          subject.b = imagediff
-            .createCanvas(imageB.width, imageB.height)
-            .getContext("2d");
-          subject.c = imagediff
-            .createCanvas(imageC.width, imageC.height)
-            .getContext("2d");
-
-          subject.a.drawImage(imageA, 0, 0);
-          subject.b.drawImage(imageB, 0, 0);
-          subject.c.drawImage(imageC, 0, 0);
-        }
-
-        generateTests(subject, beforeAll);
-      });
-
-      function generateTests(subject, beforeAllCallback) {
-        var a, b, c;
-        beforeAll(function () {
-          if (beforeAllCallback) beforeAllCallback();
-          a = subject.a;
-          b = subject.b;
-          c = subject.c;
-        });
-
         it("is imagediff equal", function () {
-          var result = toImageDiffEqual.compare(a, b);
+          var result = toImageDiffEqual.compare(images.a, images.b);
           expect(result.message).toContain("Expected not to be equal");
           expect(result.pass).toBeTruthy();
         });
 
         it("is not imagediff equal", function () {
-          var result = toImageDiffEqual.compare(a, c);
+          var result = toImageDiffEqual.compare(images.a, images.c);
           expect(result.message.toString()).toContain("Expected to be equal");
           expect(result.pass).not.toBeTruthy();
         });
 
         it("throws when not image", function () {
           expect(function () {
-            toImageDiffEqual.compare(a, {});
+            toImageDiffEqual.compare(images.a, {});
           }).toThrow();
         });
-      }
+      });
+
+      describe("with contexts", function () {
+        it("is imagediff equal", function () {
+          var result = toImageDiffEqual.compare(
+            getContextFromImage(images.a),
+            getContextFromImage(images.b)
+          );
+          expect(result.message).toContain("Expected not to be equal");
+          expect(result.pass).toBeTruthy();
+        });
+
+        it("is not imagediff equal", function () {
+          var result = toImageDiffEqual.compare(
+            getContextFromImage(images.a),
+            getContextFromImage(images.c)
+          );
+          expect(result.message.toString()).toContain("Expected to be equal");
+          expect(result.pass).not.toBeTruthy();
+        });
+
+        it("throws when not image", function () {
+          expect(function () {
+            toImageDiffEqual.compare(getContextFromImage(images.a), {});
+          }).toThrow();
+        });
+      });
     });
   });
 
