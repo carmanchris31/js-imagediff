@@ -399,43 +399,41 @@ describe("ImageUtils", function () {
   });
 
   // Image Output
-  describe("Image Output", function () {
-    if (!isNode) {
-      return;
-    }
+  if (isNode) {
+    describe("Image Output", function () {
+      var output = "spec/images/spec_output.png";
 
-    var output = "spec/images/spec_output.png";
+      afterEach(function (done) {
+        require("fs").unlink(output, done);
+      });
 
-    afterEach(function (done) {
-      require("fs").unlink(output, done);
-    });
+      it("saves an image as a PNG", function (done) {
+        var image = newImage(),
+          canvas = imagediff.createCanvas(10, 10),
+          context = canvas.getContext("2d"),
+          a,
+          b,
+          c;
 
-    it("saves an image as a PNG", function (done) {
-      var image = newImage(),
-        canvas = imagediff.createCanvas(10, 10),
-        context = canvas.getContext("2d"),
-        a,
-        b,
-        c;
+        context.moveTo(0, 0);
+        context.lineTo(10, 10);
+        context.strokeStyle = "rgba(150, 150, 150, .5)";
+        context.stroke();
+        a = context.getImageData(0, 0, 10, 10);
 
-      context.moveTo(0, 0);
-      context.lineTo(10, 10);
-      context.strokeStyle = "rgba(150, 150, 150, .5)";
-      context.stroke();
-      a = context.getImageData(0, 0, 10, 10);
-
-      imagediff.imageDataToPNG(a, output, function () {
-        loadImage(image, output, function () {
-          b = imagediff.toImageData(image);
-          c = context.getImageData(0, 0, 5, 10);
-          expect(b).toBeImageData();
-          expect(a).toImageDiffEqual(b, 10);
-          expect(a).not.toImageDiffEqual(c, 10);
-          done();
+        imagediff.imageDataToPNG(a, output, function () {
+          loadImage(image, output, function () {
+            b = imagediff.toImageData(image);
+            c = context.getImageData(0, 0, 5, 10);
+            expect(b).toBeImageData();
+            expect(a).toImageDiffEqual(b, 10);
+            expect(a).not.toImageDiffEqual(c, 10);
+            done();
+          });
         });
       });
     });
-  });
+  }
 
   // Compatibility Testing
   describe("Compatibility", function () {
