@@ -5,6 +5,7 @@
     "access": "public"
   },
   "main": "./imagediff.js",
+  "typings": "./imagediff.d.ts",
   "browser": {
     "canvas": "./browser/canvas.js"
   },
@@ -36,6 +37,7 @@
     "canvas": ">=2.6.1"
   },
   "devDependencies": {
+    "@types/jasmine": "^4.3.2",
     "canvas": "^2.11.2",
     "jasmine": "^4.6.0",
     "karma": "^6.4.2",
