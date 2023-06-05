@@ -416,6 +416,10 @@
 
   if (typeof module !== "undefined") {
     imagediff.imageDataToPNG = imageDataToPNG;
+  } else {
+    imagediff.imageDataToPNG = function () {
+      throw new Error("imageDataToPNG is only available in node environments");
+    };
   }
 
   return imagediff;
