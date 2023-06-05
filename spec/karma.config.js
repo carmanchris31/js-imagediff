@@ -9,6 +9,7 @@ module.exports = function (config) {
       },
     },
     browsers: ["ChromeHeadless"],
+    singleRun: !!process.env.CI,
     proxies: {
       "/spec/": "/base/",
     },
