@@ -1,6 +1,4 @@
 {
-  "spec_files": [
-    "spec/ImageDiffSpec.js"
-  ],
+  "spec_files": ["spec/ImageDiffSpec.js"],
   "random": false
 }

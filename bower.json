@@ -2,11 +2,5 @@
   "name": "js-imagediff",
   "version": "1.0.4",
   "main": "imagediff.js",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ]
+  "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"]
 }
